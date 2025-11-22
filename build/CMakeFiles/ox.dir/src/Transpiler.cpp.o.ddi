@@ -1,9 +1,0 @@
-{
-  "revision": 0,
-  "rules": [
-    {
-      "primary-output": "CMakeFiles/ox.dir/src/Transpiler.cpp.o"
-    }
-  ],
-  "version": 1
-}

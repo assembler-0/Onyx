@@ -1,5 +1,0 @@
-/home/Atheria/workspace/Onyx/build/CMakeFiles/ox.dir
-/home/Atheria/workspace/Onyx/build/CMakeFiles/oxc.dir
-/home/Atheria/workspace/Onyx/build/CMakeFiles/test.dir
-/home/Atheria/workspace/Onyx/build/CMakeFiles/edit_cache.dir
-/home/Atheria/workspace/Onyx/build/CMakeFiles/rebuild_cache.dir
