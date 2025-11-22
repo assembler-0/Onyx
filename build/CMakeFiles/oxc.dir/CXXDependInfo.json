@@ -1,0 +1,27 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "GNU",
+	"compiler-id" : "Clang",
+	"compiler-simulate-id" : "",
+	"config" : "",
+	"cxx-modules" : {},
+	"database-info" : null,
+	"dir-cur-bld" : "/home/Atheria/workspace/Onyx/build",
+	"dir-cur-src" : "/home/Atheria/workspace/Onyx",
+	"dir-top-bld" : "/home/Atheria/workspace/Onyx/build",
+	"dir-top-src" : "/home/Atheria/workspace/Onyx",
+	"exports" : [],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : [],
+	"language" : "CXX",
+	"linked-target-dirs" : [],
+	"module-dir" : "/home/Atheria/workspace/Onyx/build/CMakeFiles/oxc.dir",
+	"sources" : 
+	{
+		"CMakeFiles/oxc.dir/main.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/Atheria/workspace/Onyx/main.cpp"
+		}
+	}
+}
