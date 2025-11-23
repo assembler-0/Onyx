@@ -15,7 +15,7 @@ static const std::regex R_ATTRIBUTE_LINE(R"(^\s*@\[(.*)\]\s*$)"); // Handle stan
 static const std::regex R_USE_MIXIN(R"(^\s*use\s+(\w+))");
 static const std::regex R_FIELD(R"(^\s*(\w+)\s*:\s*([\w\*]+)\s*)");
 static const std::regex R_RESOLVE_START(R"(^\s*resolve\s+(\w+)\s*[{])");
-static const std::regex R_FUNC_SIGNATURE(R"(^\s*(?:@\[(.*)\]\s*)?(?:(inline|extern|static)\s+)?fn\s+(\w+)\s*\((.*)\)\s*->\s*([\w\*]+)\s*)");
+static const std::regex R_FUNC_SIGNATURE(R"(^\s*(?:@\[(.*)\]\s*)?(?:(inline|extern|static)\s+)?fn\s+(\w+)\s*\((.*)\)\s*(?:->\s*([\w\*]+))?\s*)");
 static const std::regex R_VAR(R"(^\s*var\s+(?:(volatile|register|const)\s+)?(\w+)\s*:\s*([\w\*]+)\s*(?:=\s*(.*))?)");
 static const std::regex R_IF(R"(^\s*if\s+(.*)\s*[{])");
 static const std::regex R_WHILE(R"(^\s*while\s+(.*)\s*[{])");
@@ -300,7 +300,13 @@ std::string Transpiler::processLine(const std::string& line) {
         std::string mods = match[2].str();
         std::string name = match[3].str();
         std::string args = match[4].str();
-        std::string ret = translateType(match[5].str());
+        std::string ret_onyx = match[5].str(); // Capture the raw Onyx return type
+        std::string ret_c;
+        if (ret_onyx.empty()) {
+            ret_c = "void"; // Default to void if no return type specified
+        } else {
+            ret_c = translateType(ret_onyx); // Translate if a type was specified
+        }
 
         std::vector<std::string> cArgs;
 
@@ -335,7 +341,7 @@ std::string Transpiler::processLine(const std::string& line) {
         std::string attrPrefix = "";
         if (!attr.empty()) attrPrefix = "__attribute__((" + attr + ")) ";
         
-        std::string result = indentation + attrPrefix + (mods.empty() ? "" : mods + " ") + ret + " " + name + "(" + cArgStr + ")";
+        std::string result = indentation + attrPrefix + (mods.empty() ? "" : mods + " ") + ret_c + " " + name + "(" + cArgStr + ")";
 
         if (isDefinition) {
             if (opensBrace) m_braceDepth++;
@@ -410,6 +416,7 @@ std::string Transpiler::translateType(const std::string& onyxType) {
     if (onyxType == "str") return "char*";
     if (onyxType == "ptr") return "void*";
     if (onyxType == "void") return "void";
+    if (onyxType == "char") return "char"; // Explicitly map 'char'
     if (onyxType.back() == '*') return translateType(onyxType.substr(0, onyxType.size()-1)) + "*";
     return onyxType;
 }
